@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class BlocoIndiv {
@@ -22,7 +25,15 @@ public class BlocoIndiv {
 
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
-            printWriter.println(texto);
+            Locale locale = new Locale("pt","BR");
+            GregorianCalendar calendar = new GregorianCalendar(); 
+            SimpleDateFormat formatador = new SimpleDateFormat("dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
+            
+            printWriter.println("\n\n");
+            
+            printWriter.println(formatador.format(calendar.getTime()));
+            
+            printWriter.println("Anotação : " + texto);
 
             printWriter.flush();
 

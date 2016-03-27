@@ -2,21 +2,24 @@ package blocodenotas;
 
 import java.util.Scanner;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.PrintWriter;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
 import java.io.FileWriter;
-import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 public class BlocoDeNotas {
 
     public static void main(String[] args) {
         
-        String Nome,caminho,texto,palavraAntiga,palavraNova;
+        String Nome,caminho,texto;
         int Opcao;
+        boolean verif;
         
         Scanner entrada = new Scanner(System.in);
         
@@ -27,62 +30,65 @@ public class BlocoDeNotas {
         
         File arquivo = new File(caminho);
         
-        if(arquivo.exists()){
-            Opcao=Menu(entrada);
-            
-            if(Opcao==0){
-                System.out.println("Digite a palavra que quer editar: ");
-                palavraAntiga=entrada.nextLine();
-                
-                System.out.println("Digite a nova palavra que quer escrever no lugar de "+palavraAntiga+" :");
-                palavraNova=entrada.nextLine();
-                Editar(Nome,palavraAntiga,palavraNova);
-            }
-            if(Opcao==1)
-                System.out.println("TESTE");
-            if(Opcao==2)
-                System.out.println("TESTE");    
-        }
-        
-        else{
+        if(!arquivo.exists()){
              BlocoIndiv novoBloco = new BlocoIndiv(Nome);
              System.out.println("Digite sua anotação: ");
              texto=entrada.nextLine();
              novoBloco.escrever(texto);
         }
+        
+        else{
+            Opcao=Menu(entrada);
+            
+            if(Opcao==0){
+                verif=true;
+                editar(arquivo,verif);
+            }
+            if(Opcao==1){
+                System.out.println("Suas anotações foram apagadas!!");
+                verif=false;
+                editar(arquivo,verif);
+            }
+            if(Opcao==2){
+                salvar(arquivo);
+                System.out.println("Salvo!!");
+            }    
+        }
     }
     
-    public static void Editar(String Nome,String palavraAntiga, String palavraNova){
+    public static void editar(File arq, boolean verif) {
+        Scanner novaEntr = new Scanner(System.in);    
+        String novaAnot;
         
-        String arquivo = Nome + ".txt" ;
-        String arquivoTmp = "ARQUIVO-tmp";
-        String linha;
+        System.out.println("Digite a nova anotação: ");
+        novaAnot=novaEntr.nextLine();
         
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoTmp));
-        }catch(IOException erro){
-            System.err.println("Erro");
-        }
-        
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(arquivo));
-        }catch(FileNotFoundException erro){
-            System.err.println("Erro");
+        try {
+            arq.createNewFile();
+ 
+            FileWriter fileWriter = new FileWriter(arq, verif);
+
+            PrintWriter printWriter = new PrintWriter(fileWriter,verif);
+
+            Locale locale = new Locale("pt","BR");
+            GregorianCalendar calendar = new GregorianCalendar(); 
+            SimpleDateFormat formatador = new SimpleDateFormat("dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
+            
+            printWriter.println("\n\n");
+            
+            printWriter.println(formatador.format(calendar.getTime()));
+            
+            printWriter.println("Anotação : " + novaAnot);
+
+            printWriter.flush();
+
+            printWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        while ((linha = reader.readLine()) != null) {
-            if (linha.contains(palavraAntiga)) {
-                linha = linha.replace(palavraAntiga, palavraNova);
-            }
-            writer.write(linha + "\n");
-        }
-
-        writer.close();        
-        reader.close();
-
-        new File(arquivo).delete();
-        new File(arquivoTmp).renameTo(new File(arquivo));      
-        }
+    }
     
     public static int Menu(Scanner entrada){
         int Op;
@@ -94,6 +100,27 @@ public class BlocoDeNotas {
         Op=entrada.nextInt();
         
         return Op;
+    }
+    
+    public static void salvar(File arq){
+        FileWriter fileWriter = null;
+        
+        try {
+            fileWriter = new FileWriter(arq);
+        } catch (IOException ex) {
+            Logger.getLogger(BlocoDeNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        
+        try {
+            fileWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(BlocoDeNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        printWriter.close();
+        
     }
         
     
