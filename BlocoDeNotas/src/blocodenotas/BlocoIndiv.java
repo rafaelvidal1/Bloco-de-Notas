@@ -2,14 +2,11 @@ package blocodenotas;
 
 import java.io.IOException;
 import java.io.File;
-import java.util.NoSuchElementException;
 import java.io.PrintWriter;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class BlocoIndiv {
     private String Nome;
