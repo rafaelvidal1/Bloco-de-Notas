@@ -12,7 +12,7 @@ public class BlocoIndiv {
     private String Nome;
     
     public void escrever(String texto) {
-        File diretório = new File("C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas");
+        File diretório = new File("C:/Lab1");
         File arq = new File(diretório, this.Nome+".txt");
 
         try {

@@ -26,7 +26,7 @@ public class BlocoDeNotas {
         System.out.printf("Digite seu nome para verificação: ");
         Nome=entrada.nextLine();
         
-        caminho ="C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+Nome+".txt";
+        caminho ="C:/Lab1/"+Nome+".txt";
         
         File arquivo = new File(caminho);
         
