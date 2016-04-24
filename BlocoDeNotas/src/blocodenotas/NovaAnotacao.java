@@ -95,7 +95,7 @@ public class NovaAnotacao extends javax.swing.JFrame {
         BlocoIndiv novoBloco = new BlocoIndiv(Nome);
         novoBloco.escrever(texto);
         
-        
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

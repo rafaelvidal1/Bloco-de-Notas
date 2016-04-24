@@ -45,17 +45,17 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textArea1" max="32767" attributes="0"/>
+                          <Component id="textArea" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="button3" min="-2" pref="84" max="-2" attributes="0"/>
+                                  <Component id="JLer" min="-2" pref="84" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="281" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="button1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Confirmar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                   <Component id="button2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
@@ -71,12 +71,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="button3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JLer" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="textArea1" min="-2" pref="246" max="-2" attributes="0"/>
+                  <Component id="textArea" min="-2" pref="246" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="button1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Confirmar" min="-2" max="-2" attributes="0"/>
                       <Component id="button2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -85,25 +85,31 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="java.awt.TextArea" name="textArea1">
-          <Events>
-            <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="textArea1ComponentShown"/>
-          </Events>
+        <Component class="java.awt.TextArea" name="textArea">
         </Component>
-        <Component class="java.awt.Button" name="button1">
+        <Component class="java.awt.Button" name="Confirmar">
           <Properties>
             <Property name="label" type="java.lang.String" value="Confirmar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="java.awt.Button" name="button2">
           <Properties>
             <Property name="label" type="java.lang.String" value="Cancelar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="java.awt.Button" name="button3">
+        <Component class="java.awt.Button" name="JLer">
           <Properties>
             <Property name="label" type="java.lang.String" value="Ler arquivo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JLerActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

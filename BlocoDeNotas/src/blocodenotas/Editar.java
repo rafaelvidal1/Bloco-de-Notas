@@ -3,12 +3,22 @@ package blocodenotas;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.text.*;
+import javax.swing.JFileChooser;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Editar extends javax.swing.JFrame {
 
     String Nome;
+    Scanner scan;
+    String Notas,NovaNota,caminho;
     
     public Editar(String Nome) {
         this.Nome=Nome;
@@ -25,24 +35,33 @@ public class Editar extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        textArea1 = new java.awt.TextArea();
-        button1 = new java.awt.Button();
+        textArea = new java.awt.TextArea();
+        Confirmar = new java.awt.Button();
         button2 = new java.awt.Button();
-        button3 = new java.awt.Button();
+        JLer = new java.awt.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        textArea1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                textArea1ComponentShown(evt);
+        Confirmar.setLabel("Confirmar");
+        Confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmarActionPerformed(evt);
             }
         });
 
-        button1.setLabel("Confirmar");
-
         button2.setLabel("Cancelar");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
-        button3.setLabel("Ler arquivo");
+        JLer.setLabel("Ler arquivo");
+        JLer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JLerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -52,15 +71,15 @@ public class Editar extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(textArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JLer, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(281, 281, 281))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
                                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(105, 105, 105)))))
@@ -70,12 +89,12 @@ public class Editar extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JLer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textArea, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -96,9 +115,58 @@ public class Editar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textArea1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_textArea1ComponentShown
+    private void JLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLerActionPerformed
+        
+        try {
+            scan = new Scanner(new File("C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+this.Nome+".txt"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Editar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        scan.nextLine();
+        do{
+            Notas=scan.nextLine()+"\n";
+        }while(scan.hasNext());
+        
+        scan.close();
+        
+        textArea.setText(Notas);
+        
+    }//GEN-LAST:event_JLerActionPerformed
 
-    }//GEN-LAST:event_textArea1ComponentShown
+    private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
+        caminho ="C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+Nome+".txt";
+        
+        File arquivo = new File(caminho);
+        
+        try {
+            arquivo.createNewFile();
+ 
+            FileWriter fileWriter = new FileWriter(arquivo, false);
+
+            PrintWriter printWriter = new PrintWriter(fileWriter,false);
+
+            Locale locale = new Locale("pt","BR");
+            GregorianCalendar calendar = new GregorianCalendar(); 
+            SimpleDateFormat formatador = new SimpleDateFormat("dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
+            
+            printWriter.println(formatador.format(calendar.getTime()));
+            
+            printWriter.println(textArea.getText());
+
+            printWriter.flush();
+
+            printWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        System.exit(0);
+    }//GEN-LAST:event_ConfirmarActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,10 +204,10 @@ public class Editar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button1;
+    private java.awt.Button Confirmar;
+    private java.awt.Button JLer;
     private java.awt.Button button2;
-    private java.awt.Button button3;
     private javax.swing.JPanel jPanel1;
-    private java.awt.TextArea textArea1;
+    private java.awt.TextArea textArea;
     // End of variables declaration//GEN-END:variables
 }

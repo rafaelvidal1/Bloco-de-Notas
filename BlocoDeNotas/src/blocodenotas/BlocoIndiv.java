@@ -25,12 +25,10 @@ public class BlocoIndiv {
             Locale locale = new Locale("pt","BR");
             GregorianCalendar calendar = new GregorianCalendar(); 
             SimpleDateFormat formatador = new SimpleDateFormat("dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
-            
-            printWriter.println("\n\n");
-            
+
             printWriter.println(formatador.format(calendar.getTime()));
             
-            printWriter.println("Anotação : " + texto);
+            printWriter.println(texto);
 
             printWriter.flush();
 

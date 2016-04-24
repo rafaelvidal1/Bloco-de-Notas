@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package blocodenotas;
 
-/**
- *
- * @author Pará
- */
+import java.io.File;
+import javax.swing.JOptionPane;
+
 public class Menu extends javax.swing.JFrame {
 
     String Nome;
@@ -116,8 +110,20 @@ public class Menu extends javax.swing.JFrame {
             new Editar(Nome).setVisible(true);
         }
         
+        if(jApagar.isSelected()){
+            File file = new File("C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+this.Nome+".txt");
         
+            file.delete();
+            
+            JOptionPane.showMessageDialog(null, "Suas anotações foram apagadas.");
+            
+            System.exit(0);
+        }
         
+        if(jSalvar.isSelected()){
+            JOptionPane.showMessageDialog(null, "Suas anotações foram salvas.");
+            System.exit(0);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
