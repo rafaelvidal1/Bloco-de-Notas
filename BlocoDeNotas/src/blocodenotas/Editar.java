@@ -16,12 +16,13 @@ import java.util.logging.Logger;
 
 public class Editar extends javax.swing.JFrame {
 
-    String Nome;
+    String NomeArq,NomeAnot;
     Scanner scan;
     String Notas,NovaNota,caminho;
     
-    public Editar(String Nome) {
-        this.Nome=Nome;
+    public Editar(String NomeArq ,String NomeAnot ) {
+        this.NomeArq=NomeArq;
+        this.NomeAnot=NomeAnot;
         initComponents();
     }
 
@@ -118,11 +119,10 @@ public class Editar extends javax.swing.JFrame {
     private void JLerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLerActionPerformed
         
         try {
-            scan = new Scanner(new File("C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+this.Nome+".txt"));
+            scan = new Scanner(new File("C:\\CES22\\"+this.NomeArq+"\\"+this.NomeAnot+".txt"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Editar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        scan.nextLine();
         do{
             Notas=scan.nextLine()+"\n";
         }while(scan.hasNext());
@@ -134,7 +134,7 @@ public class Editar extends javax.swing.JFrame {
     }//GEN-LAST:event_JLerActionPerformed
 
     private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
-        caminho ="C:/Users/Pará/Documents/ITA/5ºSemestre/CES-22 (Yano)/Trabalho 01/BlocoDeNotas/"+Nome+".txt";
+        caminho ="C:\\CES22\\"+this.NomeArq+"\\"+this.NomeAnot+".txt";
         
         File arquivo = new File(caminho);
         
@@ -144,12 +144,6 @@ public class Editar extends javax.swing.JFrame {
             FileWriter fileWriter = new FileWriter(arquivo, false);
 
             PrintWriter printWriter = new PrintWriter(fileWriter,false);
-
-            Locale locale = new Locale("pt","BR");
-            GregorianCalendar calendar = new GregorianCalendar(); 
-            SimpleDateFormat formatador = new SimpleDateFormat("dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
-            
-            printWriter.println(formatador.format(calendar.getTime()));
             
             printWriter.println(textArea.getText());
 
